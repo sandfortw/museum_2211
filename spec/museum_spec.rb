@@ -68,10 +68,30 @@ describe Museum do
       expect(@dmns.patrons).to eq([@patron_1, @patron_2, @patron_3])
     end
 
+    it 'can sort patrons by exhibit interest' do
+      @dmns.admit(@patron_1)
+      @dmns.admit(@patron_2)
+      @dmns.admit(@patron_3)
+      expect(@dmns.patrons_by_exhibit_interest).to eq ({
+          @gems_and_minerals=> [@patron_1],
+          @dead_sea_scrolls=> [@patron_1, @patron_2, @patron_3],
+          @imax => []
+        })
+    end
+
     it 'can have lottery contestants' do
-      
+      expect(@dmns.ticket_lottery_contestants(@dead_sea_scrolls)).to eq([@patron_1, patron_3])
     end
       
+    it 'can draw a winner' do
+      expect(@dmns.draw_lottery_winner(@dead_sea_scrolls)).to be_a(String)
+      expect(@dmns.draw_lottery_winner(@gems_and_minerals)).to eq(nil)
+    end
+
+    it 'can announce a winner' do
+      expect(@dmns.announce_lottery_winner(@imax)).to eq("Bob has won the IMAX exhibit lottery")
+      expect(@dmns.announce_lottery_winner(@gems_and_minerals)).to eq("No winners for this lottery")
+    end
   end
 
 end
