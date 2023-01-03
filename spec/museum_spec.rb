@@ -80,7 +80,7 @@ describe Museum do
     end
 
     it 'can have lottery contestants' do
-      expect(@dmns.ticket_lottery_contestants(@dead_sea_scrolls)).to eq([@patron_1, patron_3])
+      expect(@dmns.ticket_lottery_contestants(@dead_sea_scrolls)).to eq([@patron_1, @patron_3])
     end
       
     it 'can draw a winner' do
